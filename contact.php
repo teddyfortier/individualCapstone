@@ -26,7 +26,7 @@
     </header>
     <div class="header1">
 
-        <p><center> VIP Sign Up </center></p>
+        <p><center> Contact Us </center></p>
     </div>
 
     <main role="main" id="main-content">
@@ -46,10 +46,10 @@
             $errors = "Invalid inputs";
         } else {
 
-             $query = mysqli_query($conn, "SELECT username, email FROM register
-             WHERE username = '$username';");
+             $query = mysqli_query($conn, "SELECT fname, lname, email, dob FROM vip
+             WHERE fname = '$fname';");
 
-              $query1 = mysqli_query($conn, "SELECT email from register WHERE email = 
+              $query1 = mysqli_query($conn, "SELECT email from vip WHERE email = 
              '$email';");
 
              $data = mysqli_fetch_assoc($query);
@@ -61,10 +61,11 @@
 
             // } elseif(is_null($data["email"])){
                 // $errors = "Email already exists";
-            } else {
-                $password = password_hash($password, PASSWORD_DEFAULT);
-                $query = mysqli_query($conn, "INSERT INTO register (username, email, password) VALUES ('$username', '$email',
-                '$password');");
+            // } else {
+                // $password = password_hash($password, PASSWORD_DEFAULT);
+
+                $query = mysqli_query($conn, "INSERT INTO vip (fname, lname, email, dob) VALUES ('$fname', '$lname',
+                '$email', '$dob');");
 
                  if ($query) {
                      echo "user created";
@@ -74,46 +75,87 @@
              }
         
     
-            $password = password_hash($password, PASSWORD_DEFAULT);
+            // $password = password_hash($password, PASSWORD_DEFAULT);
 
-            $query = mysqli_query($conn, "INSERT INTO register (username, email, password) 
-            VALUES ('$username', '$email', '$password');");
+            $query = mysqli_query($conn, "INSERT INTO vip (fname, lname, email, dob) 
+            VALUES ('$fname', '$lname', '$email', '$dob');");
             }
         }
     
          
 ?>
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>Register</title>
-    </head>
 
     <body>
-        <h3> Register for ForMusic </h3>
+        <h3> Sign up for our VIP List </h3>
         <p style="color: red;"><?php echo $errors; ?></p>
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>"method="POST">
-        <input type="text" name="username" placeholder="Username"> <br>
+        <input type="text" name="fname" placeholder="First Name"> <br>
+        <input type="text" name="lname" placeholder="Last Name"> <br>
         <input type="text" name="email" placeholder="Email"> <br>
-        <input type="text" name="password" placeholder="Password"> <br><br>
+        <input type="text" name="dob" placeholder="Date of Birth"> <br><br>
         <input type="submit">
 
 
 
 
         </form>
-        <a href="login.php">Already have an account? Login to ForMusic</a>
+<br>
+        <a href="login.php">Search VIP Members</a>
+<br>
+<br>
+
+<!-- Email Form -->
+
+<form method="post" name="myemailform" action="contact.php">
+
+Name:	<input type="text" name="name">
+
+Email: <input type="text" name="email">
+
+Compose Message:	<textarea name="message"></textarea>
+
+<input type="submit" value="Send Message">
+</form>
+
+
+<?php
+  $name = $_POST['name'];
+  $visitor_email = $_POST['email'];
+  $message = $_POST['message'];
 
 
 
-        <div id="googleMap" style="width:100%;height:400px;"></div>
+	$email_from = 'pacostacos@gmail.com';
+
+	$email_subject = "A VIP Member has sent you a message!";
+
+	$email_body = "You have received a new message from $name.".
+    "Here is the message: $message";
+
+
+
+
+
+  $to = "fortierteddy@gmail.com";
+
+  $headers = "From: $email_from";
+
+  $headers .= "Reply-To: $visitor_email";
+
+  mail($to,$email_subject,$email_body,$headers);
+
+ ?>
+
+
+
+
+<div id="googleMap" style="width:60%;height:400px;"></div>
 
     <script>
     function myMap() {
     var mapProp= {
-    center:new google.maps.LatLng(51.508742,-0.120850),
+    center:new google.maps.LatLng(39.169720,-86.533950),
     zoom:5,
 };
     var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);

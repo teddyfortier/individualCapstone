@@ -6,6 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link media="all" rel="stylesheet" href="rivet.css">
     <title>Contact Us</title>
+    <title>maps</title>
+    <style>
+        #map{
+            height: 400px;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
     <header class="rvt-header" role="banner">
@@ -33,7 +40,7 @@
 
     <?php
     if($_SERVER["REQUEST_METHOD"] == "POST") {
-        $conn = mysqli_connect("db.soic.indiana.edu","i494f20_team83","my+sql=i494f20_team83","i494f20_team83");
+        $conn = mysqli_connect("db.luddy.indiana.edu","i494f20_ttfortie","my+sql=i494f20_ttfortie","i494f20_ttfortie");
 
 
         $errors = "";
@@ -93,7 +100,7 @@
         <input type="text" name="fname" placeholder="First Name"> <br>
         <input type="text" name="lname" placeholder="Last Name"> <br>
         <input type="text" name="email" placeholder="Email"> <br>
-        <input type="text" name="dob" placeholder="Date of Birth"> <br><br>
+        <input type="text" name="dob" placeholder="Date of Birth (yyyy-mm-dd)"> <br><br>
         <input type="submit">
 
 
@@ -104,6 +111,10 @@
         <a href="login.php">Search VIP Members</a>
 <br>
 <br>
+
+<h3> Send us a message! </h3>
+    </br>
+    </br>
 
 <!-- Email Form -->
 
@@ -146,25 +157,38 @@ Compose Message:	<textarea name="message"></textarea>
   mail($to,$email_subject,$email_body,$headers);
 
  ?>
+ <br>
+ <br>
 
+ <!-- Map -->
 
-
-
-<div id="googleMap" style="width:60%;height:400px;"></div>
-
+ <h1> Pacos Tacos Location</h1>
+    <div id="map"></div>
     <script>
-    function myMap() {
-    var mapProp= {
-    center:new google.maps.LatLng(39.169720,-86.533950),
-    zoom:5,
-};
-    var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
-}
+        // Initialize and add the map
+        function initMap() {
+          // The location of Pacos
+          const pacos = { lat: 39.169720, lng: -86.533950 };
+          // The map, centered at Pacos
+          const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 18,
+            center: pacos,
+          });
+          // The marker, positioned at Pacos
+          const marker = new google.maps.Marker({
+            position: pacos,
+            map: map,
+          });
+        }
+      </script>
+    <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdOYQfJP0YvZuQD_JWvQ2BHGZg4pYCNIw&callback=initMap&libraries=&v=weekly">
     </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdOYQfJP0YvZuQD_JWvQ2BHGZg4pYCNIw&callback=myMap"></script>
 
-    </body>
+
+
+</body>
 
 
 </html>

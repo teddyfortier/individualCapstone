@@ -115,60 +115,6 @@
     <input type="submit" value="View All VIP Members" />
 </form>
 
-<div class="q1">
-            
-            <p>Search VIP Members by Last Name: </p>
-            <form action="vip.php" method="POST">
-                <select name='form-section' class="select">
-                    <?php
-                    $conn = mysqli_connect("db.luddy.indiana.edu","i494f20_ttfortie","my+sql=i494f20_ttfortie","i494f20_ttfortie");
-                    // Check connection
-                    if (!$conn) {
-                        die("Connection failed: " . mysqli_connect_error() . "<br>");
-                    }
-
-                    $result = mysqli_query($conn,"SELECT DISTINCT lname FROM vip");
-                    
-                    while ($row = mysqli_fetch_assoc($result)) {
-                                unset($lname, $vip);
-                                $lname = $row['lname'];
-                                $vipid = $row['vipid']; 
-                                echo '<option value="'.$lname.'">'.$vipid.'</option>';
-                    }
-                    ?>
-                </select>
-                <input type="submit" value="Search">
-            </form>
-        </div>
-<br>
-
-<h1> or </h1>
-
-<div class="q2">
-            
-            <p>Search VIP Members by Date of Birth: </p>
-            <form action="vip2.php" method="POST">
-                <select name='form-section' class="select">
-                    <?php
-                    $conn = mysqli_connect("db.luddy.indiana.edu","i494f20_ttfortie","my+sql=i494f20_ttfortie","i494f20_ttfortie");
-                    // Check connection
-                    if (!$conn) {
-                        die("Connection failed: " . mysqli_connect_error() . "<br>");
-                    }
-
-                    $result = mysqli_query($conn,"SELECT DISTINCT dob FROM vip");
-                    
-                    while ($row = mysqli_fetch_assoc($result)) {
-                                unset($dob, $vip);
-                                $dob = $row['dob'];
-                                $vipid = $row['vipid']; 
-                                echo '<option value="'.$dob.'">'.$vipid.'</option>';
-                    }
-                    ?>
-                </select>
-                <input type="submit" value="Search">
-            </form>
-        </div>
 <br>
 <br>
 <hr>

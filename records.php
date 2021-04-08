@@ -45,7 +45,7 @@
         die("Connection failed: " . mysqli_connect_error() . "<br>");
         }
 
-        $sql = "SELECT fname, lname, email, dob FROM vip";
+        $sql = "SELECT fname, lname, email, dob FROM vip ORDER BY dob";
         $result = $conn-> query($sql);
 
         if($result-> num_rows > 0 ){

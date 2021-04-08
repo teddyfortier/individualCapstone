@@ -94,7 +94,7 @@
 
 
     <body>
-        <h3> Sign up for our VIP List </h3>
+        <h3><b> Sign up for our VIP List </b></h3>
         <p style="color: red;"><?php echo $errors; ?></p>
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>"method="POST">
         <input type="text" name="fname" placeholder="First Name"> <br>
@@ -108,11 +108,73 @@
 
         </form>
 <br>
-        <a href="login.php">Search VIP Members</a>
-<br>
+<hr>
+<hr>
+
+<form action="records.php">
+    <input type="submit" value="View All VIP Members" />
+</form>
+
+<div class="q1">
+            
+            <p>Search VIP Members by Last Name: </p>
+            <form action="vip.php" method="POST">
+                <select name='form-section' class="select">
+                    <?php
+                    $conn = mysqli_connect("db.luddy.indiana.edu","i494f20_ttfortie","my+sql=i494f20_ttfortie","i494f20_ttfortie");
+                    // Check connection
+                    if (!$conn) {
+                        die("Connection failed: " . mysqli_connect_error() . "<br>");
+                    }
+
+                    $result = mysqli_query($conn,"SELECT DISTINCT lname FROM vip");
+                    
+                    while ($row = mysqli_fetch_assoc($result)) {
+                                unset($lname, $vip);
+                                $lname = $row['lname'];
+                                $vipid = $row['vipid']; 
+                                echo '<option value="'.$lname.'">'.$vipid.'</option>';
+                    }
+                    ?>
+                </select>
+                <input type="submit" value="Search">
+            </form>
+        </div>
 <br>
 
-<h3> Send us a message! </h3>
+<h1> or </h1>
+
+<div class="q2">
+            
+            <p>Search VIP Members by Date of Birth: </p>
+            <form action="vip2.php" method="POST">
+                <select name='form-section' class="select">
+                    <?php
+                    $conn = mysqli_connect("db.luddy.indiana.edu","i494f20_ttfortie","my+sql=i494f20_ttfortie","i494f20_ttfortie");
+                    // Check connection
+                    if (!$conn) {
+                        die("Connection failed: " . mysqli_connect_error() . "<br>");
+                    }
+
+                    $result = mysqli_query($conn,"SELECT DISTINCT dob FROM vip");
+                    
+                    while ($row = mysqli_fetch_assoc($result)) {
+                                unset($dob, $vip);
+                                $dob = $row['dob'];
+                                $vipid = $row['vipid']; 
+                                echo '<option value="'.$dob.'">'.$vipid.'</option>';
+                    }
+                    ?>
+                </select>
+                <input type="submit" value="Search">
+            </form>
+        </div>
+<br>
+<br>
+<hr>
+<hr>
+
+<h3><b> Send us a message! </b></h3>
     </br>
     </br>
 
@@ -137,32 +199,35 @@ Compose Message:	<textarea name="message"></textarea>
 
 
 
-	$email_from = 'pacostacos@gmail.com';
+$email_from = 'pacostacos@gmail.com';
 
-	$email_subject = "A VIP Member has sent you a message!";
+$email_subject = "A VIP Member has sent you a message!";
 
-	$email_body = "You have received a new message from $name.".
+$email_body = "You have received a new message from $name.".
     "Here is the message: $message";
 
 
 
 
 
-  $to = "fortierteddy@gmail.com";
+$to = "fortierteddy@gmail.com";
 
-  $headers = "From: $email_from";
+$headers = "From: $email_from";
 
-  $headers .= "Reply-To: $visitor_email";
+$headers .= "Reply-To: $visitor_email";
 
-  mail($to,$email_subject,$email_body,$headers);
+mail($to,$email_subject,$email_body,$headers);
 
  ?>
  <br>
  <br>
 
+ <hr>
+ <hr>
+
  <!-- Map -->
 
- <h1> Pacos Tacos Location</h1>
+ <h3><b>Pacos Tacos Location</b></h3>
     <div id="map"></div>
     <script>
         // Initialize and add the map
@@ -178,6 +243,14 @@ Compose Message:	<textarea name="message"></textarea>
           const marker = new google.maps.Marker({
             position: pacos,
             map: map,
+          });
+
+          var infoWindow = new google.maps.InfoWindow({
+              content: '<h1><b>Pacos Tacos: </b> 403 N. Walnut St. Bloomington, IN 47404</h1>'
+          });
+
+          marker.addListener('click', function(){
+              infoWindow.open(map, marker);
           });
         }
       </script>

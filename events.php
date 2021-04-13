@@ -27,14 +27,20 @@
         <span class="rvt-header__title">
             <a href="index.php">Pacos Tacos</a>
         </span>
+        
     </header>
+
+    <form action="addevent.php">
+    <input type="submit" value="Click to Add Event" />
+</form>
 
     <table>
         <tr>
-            <th><b>First Name</b></th>
-            <th><b>Last Name</b></th>
-            <th><b>Email</b></th>
-            <th><b>Date of Birth</b></th>
+            <th><b>Event Title</b></th>
+            <th><b>Date</b></th>
+            <th><b>Location</b></th>
+            <th><b>Description</b></th>
+            <th><b>Display Status</b></th>
         <tr>
 
         <?php
@@ -45,12 +51,12 @@
         die("Connection failed: " . mysqli_connect_error() . "<br>");
         }
 
-        $sql = "SELECT fname, lname, email, dob FROM vip ORDER BY dob";
+        $sql = "SELECT title, date, location, description, status, eventid FROM events ORDER BY date asc";
         $result = $conn-> query($sql);
 
         if($result-> num_rows > 0 ){
             while($row = $result-> fetch_assoc()) {
-                echo "<tr><td>".$row["fname"]."</td><td>".$row["lname"]."</td><td>".$row["email"]."</td><td>".$row["dob"]."</td></tr>";
+                echo "<tr><td>".$row["title"]."</td><td>".$row["date"]."</td><td>".$row["location"]."</td><td>".$row["description"]."</td><td>".$row["status"]."</td><td><a href='editevent.php?eventid=".$row["eventid"]."'>Edit</a></td></tr>";
             }
             echo "</table>";
         }
@@ -64,84 +70,6 @@
 
     </table>
 
-    <div class="q1">
-            
-            <p>Search VIP Members by Full Name: </p>
-            <form action="vip.php" method="POST">
-                <select name='form-section' class="select">
-                    <?php
-                    $conn = mysqli_connect("db.luddy.indiana.edu","i494f20_ttfortie","my+sql=i494f20_ttfortie","i494f20_ttfortie");
-                    // Check connection
-                    if (!$conn) {
-                        die("Connection failed: " . mysqli_connect_error() . "<br>");
-                    }
-
-                    $result = mysqli_query($conn, "SELECT CONCAT(fname, ' ', lname) AS fullname, vipid FROM vip");
-                    
-                    while ($row = mysqli_fetch_assoc($result)) {
-                                unset($fullname, $vip);
-                                $fullname = $row['fullname'];
-                                $vipid = $row['vipid']; 
-                                echo '<option value="'.$vipid.'">'.$fullname.'</option>';
-                    }
-                    ?>
-                </select>
-                <input type="submit" value="Search">
-            </form>
-        </div>
-<br>
-
-<h1> or </h1>
-
-<div class="q2">
-            
-            <p>Search VIP Members by Date of Birth: </p>
-            <form action="vip2.php" method="POST">
-                <select name='form-section' class="select">
-                    <?php
-                    $conn = mysqli_connect("db.luddy.indiana.edu","i494f20_ttfortie","my+sql=i494f20_ttfortie","i494f20_ttfortie");
-                    // Check connection
-                    if (!$conn) {
-                        die("Connection failed: " . mysqli_connect_error() . "<br>");
-                    }
-
-                    $result = mysqli_query($conn,"SELECT DISTINCT dob, vipid FROM vip");
-                    
-                    while ($row = mysqli_fetch_assoc($result)) {
-                                unset($dob, $vip);
-                                $dob = $row['dob'];
-                                $vipid = $row['vipid']; 
-                                echo '<option value="'.$vipid.'">'.$dob.'</option>';
-                    }
-                    ?>
-                </select>
-                <input type="submit" value="Search">
-            </form>
-        </div>
-
-        <br>
-        <br>
-        <br>
-        <br>
-
-
-
-
-
-
-
-
-
-
-
-
-
-        </body>
-
-
-</html>
-
-    
 
 
     <footer class="rvt-footer m-top-xxl" role="contentinfo">

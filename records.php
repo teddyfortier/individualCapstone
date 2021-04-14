@@ -1,3 +1,10 @@
+<?php
+session_start();
+if ($_SESSION['admin'] != true){
+    echo('You are not admin');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
@@ -5,6 +12,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link media="all" rel="stylesheet" href="rivet.css">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="554234175160-1v7h5ac6tltbrolrcath39gb0djk16ld.apps.googleusercontent.com">
     <title>Contact Us</title>
     <title>maps</title>
     <style>
@@ -28,6 +37,87 @@
             <a href="index.php">Pacos Tacos</a>
         </span>
     </header>
+    <div class="q1">
+            
+            <p>Search VIP Members by Full Name: </p>
+            <form action="vip.php" method="POST">
+                <select name='form-section' class="select">
+                    <?php
+                    $conn = mysqli_connect("db.luddy.indiana.edu","i494f20_ttfortie","my+sql=i494f20_ttfortie","i494f20_ttfortie");
+                    // Check connection
+                    if (!$conn) {
+                        die("Connection failed: " . mysqli_connect_error() . "<br>");
+                    }
+
+                    $result = mysqli_query($conn, "SELECT CONCAT(fname, ' ', lname) AS fullname, vipid FROM vip");
+                    
+                    while ($row = mysqli_fetch_assoc($result)) {
+                                unset($fullname, $vip);
+                                $fullname = $row['fullname'];
+                                $vipid = $row['vipid']; 
+                                echo '<option value="'.$vipid.'">'.$fullname.'</option>';
+                    }
+                    ?>
+                </select>
+                <input type="submit" value="Search">
+            </form>
+        </div>
+
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        <a href="#" onclick="signOut();">Sign out</a>
+
+        
+<script>
+    function onSignIn(googleUser) {}
+        function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+        // $.ajax({
+        //             type: "POST",
+        //             url: "deletesession.php",
+        //             data: {
+        //                 'email': email,
+        //             },
+        //             cache: false,
+        //             success: function (data) {
+        //                 var obj = JSON.parse(data);
+        //                 if (obj.logout == 'true') {
+        //                     location.assign('login.php');
+        //                 }
+                        
+                    
+        //             }
+        //         });
+        location.assign('deletesession.php');
+    });
+  }
+</script>
+
+<div class="q1">
+            
+            <p>Search VIP Members by Date of Birth: </p>
+            <form action="vip2.php" method="POST">
+                <select name='form-section' class="select">
+                    <?php
+                    $conn = mysqli_connect("db.luddy.indiana.edu","i494f20_ttfortie","my+sql=i494f20_ttfortie","i494f20_ttfortie");
+                    // Check connection
+                    if (!$conn) {
+                        die("Connection failed: " . mysqli_connect_error() . "<br>");
+                    }
+
+                    $result = mysqli_query($conn,"SELECT DISTINCT dob, vipid FROM vip");
+                    
+                    while ($row = mysqli_fetch_assoc($result)) {
+                                unset($dob, $vip);
+                                $dob = $row['dob'];
+                                $vipid = $row['vipid']; 
+                                echo '<option value="'.$vipid.'">'.$dob.'</option>';
+                    }
+                    ?>
+                </select>
+                <input type="submit" value="Search">
+            </form>
+        </div>
 
     <table>
         <tr>
@@ -64,76 +154,24 @@
 
     </table>
 
-    <div class="q1">
-            
-            <p>Search VIP Members by Full Name: </p>
-            <form action="vip.php" method="POST">
-                <select name='form-section' class="select">
-                    <?php
-                    $conn = mysqli_connect("db.luddy.indiana.edu","i494f20_ttfortie","my+sql=i494f20_ttfortie","i494f20_ttfortie");
-                    // Check connection
-                    if (!$conn) {
-                        die("Connection failed: " . mysqli_connect_error() . "<br>");
-                    }
-
-                    $result = mysqli_query($conn, "SELECT CONCAT(fname, ' ', lname) AS fullname, vipid FROM vip");
-                    
-                    while ($row = mysqli_fetch_assoc($result)) {
-                                unset($fullname, $vip);
-                                $fullname = $row['fullname'];
-                                $vipid = $row['vipid']; 
-                                echo '<option value="'.$vipid.'">'.$fullname.'</option>';
-                    }
-                    ?>
-                </select>
-                <input type="submit" value="Search">
-            </form>
-        </div>
-<br>
-
-<h1> or </h1>
-
-<div class="q2">
-            
-            <p>Search VIP Members by Date of Birth: </p>
-            <form action="vip2.php" method="POST">
-                <select name='form-section' class="select">
-                    <?php
-                    $conn = mysqli_connect("db.luddy.indiana.edu","i494f20_ttfortie","my+sql=i494f20_ttfortie","i494f20_ttfortie");
-                    // Check connection
-                    if (!$conn) {
-                        die("Connection failed: " . mysqli_connect_error() . "<br>");
-                    }
-
-                    $result = mysqli_query($conn,"SELECT DISTINCT dob, vipid FROM vip");
-                    
-                    while ($row = mysqli_fetch_assoc($result)) {
-                                unset($dob, $vip);
-                                $dob = $row['dob'];
-                                $vipid = $row['vipid']; 
-                                echo '<option value="'.$vipid.'">'.$dob.'</option>';
-                    }
-                    ?>
-                </select>
-                <input type="submit" value="Search">
-            </form>
-        </div>
-
         <br>
         <br>
         <br>
         <br>
 
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        <a href="#" onclick="signOut();">Sign out</a>
 
-
-
-
-
-
-
-
-
-
+        
+<script>
+    function onSignIn(googleUser) {}
+        function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+        location.assign('login.php');
+    });
+  }
+</script>
 
 
         </body>

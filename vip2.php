@@ -11,7 +11,7 @@ if (!$conn) {
 $section = mysqli_real_escape_string($conn, $_POST['form-section']);
 
 $sql = "SELECT vip.fname, vip.lname, vip.email, 
-vip.dob FROM vip WHERE vip.dob = '$section'";
+vip.dob FROM vip WHERE vip.vipid = '$section'";
 
 $result = mysqli_query($conn, $sql);
 

@@ -11,12 +11,16 @@
         $description = htmlspecialchars($_POST["description"]);
         $status = htmlspecialchars($_POST["status"]);
 
-        if(empty($title) || empty($date) || empty($location) || empty($description) || empty($status)) {
+        $eventid = mysqli_real_escape_string($conn, $_POST['eventid']);
+
+        if(empty($title) || empty($date) || empty($location) || empty($description) || $status < 0) {
             $errors = "Invalid inputs";
         } else {
 
 
-                $query = mysqli_query($conn, "UPDATE events SET title='$title', date='$date', location='$location', description='$description', status='$status' WHERE eventid='$eventid';");
+            $sql_update = "UPDATE events SET title='".$title."', date='".$date."', location='".$location."', description='".$description."', status=".$status." WHERE eventid=".$eventid;
+            echo $sql_update;
+            $query = mysqli_query($conn, $sql_update);
 
                  if ($query) {
                      echo "event created <a href= 'events.php'> See events <a/>" ;
@@ -29,18 +33,30 @@
     }
 
     // Grab POST Data
-$section = mysqli_real_escape_string($conn, $_GET['eventid']);
 
+$eventid_edit = mysqli_real_escape_string($conn, $_GET['eventid']);
 $sql = "SELECT events.title, events.date, events.location, 
-events.description, events.status FROM events WHERE events.eventid = ".$_GET['eventid'];
+events.description, events.status FROM events WHERE events.eventid = ".$eventid_edit;
 
+$val_title = "";
+$val_date = "";
+$val_location = "";
+$val_description = "";
+$val_status = "";
 
 $result = mysqli_query($conn, $sql);
+while($row = mysqli_fetch_array($result))
+{ 
+    $val_title = $row["title"];
+    $val_date = $row["date"];
+    $val_location = $row["location"];
+    $val_description = $row["description"];
+    $val_status = $row["status"];
+    
+   
+};
 
 
-$field = mysqli_fetch_array($result);
-
-var_dump($field);
     
          
 ?>
@@ -84,13 +100,14 @@ var_dump($field);
     <h3><b> Edit Event </b></h3>
         <p style="color: red;"><?php echo $errors; ?></p>
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>"method="POST">
-        <input type="text" name="title" placeholder="Event Title" value="<?php echo $field['title'] ?>"> <br>
-        <input type="text" name="date" placeholder="Date"> <br>
-        <input type="text" name="location" placeholder="Location"> <br>
-        <input type="text" name="description" placeholder="Description"> <br>
+        <input type="hidden" name="eventid" value="<?php echo $eventid_edit; ?>">
+        <input type="text" name="title" placeholder="Event Title" value="<?php echo $val_title; ?>"> <br>
+        <input type="text" name="date" placeholder="Date" value="<?php echo $val_date; ?>"> <br>
+        <input type="text" name="location" placeholder="Location" value="<?php echo $val_location; ?>"> <br>
+        <input type="text" name="description" placeholder="Description" value="<?php echo $val_description; ?>"> <br>
         <p> Display Status (Y/N) </p>
-        <input id="yes" type="radio" name="status" value="1"> <label for="yes"> Yes </label> <br>
-        <input id="no" type="radio" name="status" value="0"> <label for="no"> No </label> <br><br>
+        <input id="yes" type="radio" name="status" value="1" <?php  if ($val_status==1) echo "checked"; ?>> <label for="yes"> Yes </label> <br>
+        <input id="no" type="radio" name="status" value="0" <?php  if ($val_status==0) echo "checked"; ?>> <label for="no"> No </label> <br><br>
         <input type="submit">
     </form>
 

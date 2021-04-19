@@ -9,14 +9,17 @@
         $location = htmlspecialchars($_POST["location"]); 
         $description = htmlspecialchars($_POST["description"]);
         $status = htmlspecialchars($_POST["status"]);
+        echo('s '. $status);
 
-        if(empty($title) || empty($date) || empty($location) || empty($description) || empty($status)) {
+        if(empty($title) || empty($date) || empty($location) || empty($description) || $status < 0) {
             $errors = "Invalid inputs";
         } else {
 
+            $sql = "INSERT INTO events (title, date, location, description, status) VALUES ('".$title."', '".$date."',
+            '".$location."', '".$description."', ".$status.");";
+            echo($sql);
 
-                $query = mysqli_query($conn, "INSERT INTO events (title, date, location, description, status) VALUES ('$title', '$date',
-                '$location', '$description', '$status');");
+                $query = mysqli_query($conn,$sql);
 
                  if ($query) {
                      echo "event created <a href= 'events.php'> See events <a/>" ;
@@ -71,7 +74,7 @@
         <p style="color: red;"><?php echo $errors; ?></p>
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>"method="POST">
         <input type="text" name="title" placeholder="Event Title"> <br>
-        <input type="text" name="date" placeholder="Date"> <br>
+        <input type="date" name="date" placeholder="Date"> <br>
         <input type="text" name="location" placeholder="Location"> <br>
         <input type="text" name="description" placeholder="Description"> <br>
         <p> Display Status (Y/N) </p>

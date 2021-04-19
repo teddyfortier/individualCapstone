@@ -56,7 +56,7 @@
 
         if($result-> num_rows > 0 ){
             while($row = $result-> fetch_assoc()) {
-                echo "<tr><td>".$row["title"]."</td><td>".$row["date"]."</td><td>".$row["location"]."</td><td>".$row["description"]."</td><td>".$row["status"]."</td><td><a href='editevent.php?eventid=".$row["eventid"]."'>Edit</a></td></tr>";
+                echo "<tr><td>".$row["title"]."</td><td>".$row["date"]."</td><td>".$row["location"]."</td><td>".$row["description"]."</td><td>".$row["status"]."</td><td><a href='editevent.php?eventid=".$row["eventid"]."'>Edit</a> | <a href='deleteevent.php?eventid=".$row["eventid"]."'>Delete</a></td></tr>";
             }
             echo "</table>";
         }

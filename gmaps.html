@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link media="all" rel="stylesheet" href="./css/rivet.css">
+    <meta charset='utf-8' />
+    <title>maps</title>
+    <style>
+        #map{
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+    
+<body>
+    <h1> Pacos Tacos Location</h1>
+    <div id="map"></div>
+    <script>
+        // Initialize and add the map
+        function initMap() {
+          // The location of Pacos
+          const pacos = { lat: 39.169720, lng: -86.533950 };
+          // The map, centered at Pacos
+          const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 18,
+            center: pacos,
+          });
+          // The marker, positioned at Pacos
+          const marker = new google.maps.Marker({
+            position: pacos,
+            map: map,
+          });
+        }
+      </script>
+    <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdOYQfJP0YvZuQD_JWvQ2BHGZg4pYCNIw&callback=initMap&libraries=&v=weekly">
+    </script>
+
+</body>
+</html>

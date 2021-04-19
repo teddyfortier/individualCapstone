@@ -100,7 +100,7 @@
         <input type="text" name="fname" placeholder="First Name"> <br>
         <input type="text" name="lname" placeholder="Last Name"> <br>
         <input type="text" name="email" placeholder="Email"> <br>
-        <input type="date" name="dob" placeholder="Date of Birth (yyyy-mm-dd)"> <br><br>
+        <input type="date" name="dob" placeholder="Date of Birth"> <br><br>
         <input type="submit">
 
 
@@ -108,8 +108,7 @@
 
         </form>
 <br>
-<hr>
-<hr>
+<br>
 
 <form action="records.php">
     <input type="submit" value="View All VIP Members" />

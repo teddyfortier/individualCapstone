@@ -1,1 +1,1 @@
-# individualcapstone
+# Senior Capstone Project
